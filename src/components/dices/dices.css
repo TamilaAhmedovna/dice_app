@@ -1,0 +1,7 @@
+.dices {
+    display: flex;
+}
+
+.dices-title {
+    margin-right: 20px;
+}
