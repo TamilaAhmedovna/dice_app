@@ -5,3 +5,7 @@
 .dices-title {
     margin-right: 20px;
 }
+
+.dices-list {
+    display: flex;
+}
