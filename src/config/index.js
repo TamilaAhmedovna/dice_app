@@ -12,17 +12,17 @@ const initialData = {
     dices: getDices(),
     columns: {
         diceColumn: {
-            id: '1',
+            id: 'diceColumn',
             title: 'Dices',
-            taskIds: ['dice1', 'dice2', 'dice3', 'dice', 'dice5']
+            taskIds: ['dice1', 'dice2', 'dice3', 'dice4', 'dice5']
         },
         operatorsColumn: {
-            id: 2,
+            id: 'operatorsColumn',
             title: 'Operators',
             taskIds: []
         },
         boardColumn: {
-            id: 3,
+            id: 'operatorsColumn',
             title: 'Board',
             taskIds: []
         }
