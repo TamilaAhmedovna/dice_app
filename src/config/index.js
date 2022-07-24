@@ -7,14 +7,15 @@ const getDices = () => {
 
     return dices;
 }
+const dices = getDices()
 
 const initialData = {
-    dices: getDices(),
+    dices,
     columns: {
         diceColumn: {
             id: 'diceColumn',
             title: 'Dices',
-            taskIds: ['dice1', 'dice2', 'dice3', 'dice4', 'dice5']
+            taskIds: Object.keys(dices)
         },
         operatorsColumn: {
             id: 'operatorsColumn',
@@ -22,12 +23,12 @@ const initialData = {
             taskIds: []
         },
         boardColumn: {
-            id: 'operatorsColumn',
+            id: 'boardColumn',
             title: 'Board',
             taskIds: []
         }
     },
-    columnOrder: ['diceColumn']
+    columnOrder: ['diceColumn', 'operatorsColumn', 'boardColumn']
 }
 
 export default initialData;

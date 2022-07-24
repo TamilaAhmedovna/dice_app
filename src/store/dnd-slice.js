@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, current } from '@reduxjs/toolkit'
 import initialData from '../config';
 
 const initialState = initialData;
@@ -7,20 +7,32 @@ export const dndSlice = createSlice({
   name: 'dnd',
   initialState,
   reducers: {
-    update: (state, action) => {
-      console.log(state)
-      console.log(action)
-    },
-    remove: (state, action) => {
-      state.value -= 1
-    },
-    changePosition: (state, action) => {
-      state.value += action.payload
-    },
+    updateColumn: (state, action) => {
+      const { destination, source } = action.payload
+      const sourceColumn = current(state).columns[source.droppableId]
+      const destinationColumn = current(state).columns[destination.droppableId]
+      const sourceTaskIds = Array.from(sourceColumn.taskIds)
+      const destinationTaskIds = Array.from(destinationColumn.taskIds)
+      const draggableItem = sourceTaskIds.splice(source.index, 1)[0]
+
+      if (destination.droppableId === source.droppableId) {
+        sourceTaskIds.splice(destination.index, 0, draggableItem)
+
+        state.columns.diceColumn.taskIds = sourceTaskIds
+      } else {
+        destinationTaskIds.splice(destination.index, 0, draggableItem)
+
+        state.columns.diceColumn.taskIds = sourceTaskIds
+        state.columns.boardColumn.taskIds = destinationTaskIds
+      }
+
+
+    }
   },
 })
 
+
 // Action creators are generated for each case reducer function
-export const { update } = dndSlice.actions
+export const { updateColumn } = dndSlice.actions
 
 export default dndSlice.reducer

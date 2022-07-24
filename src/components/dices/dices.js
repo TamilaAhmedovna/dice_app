@@ -5,12 +5,12 @@ import Dice from '../dice/dice';
 import initialData from '../../config';
 import './dices.css';
 
-function Dices({ dices }) {
+function Dices({ dices, taskIds }) {
 
   const renderDicesList = () => {
     return (
-      <Droppable 
-      droppableId={initialData.columns.diceColumn.id}
+      <Droppable
+        droppableId={initialData.columns.diceColumn.id}
       // direction="horizontal"
       >
         {(provided) => (
@@ -18,12 +18,14 @@ function Dices({ dices }) {
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
-            {Object.keys(dices).map((key, index) => {
+            {taskIds.map((taskId, index) => {
+              const dice = dices[taskId]
+
               return (
                 <Dice
-                  dice={dices[key]}
+                  dice={dice}
                   index={index}
-                  key={dices[key].id}
+                  key={dice.id}
                 />
               )
             })}

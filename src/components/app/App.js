@@ -7,46 +7,32 @@ import Dices from '../dices/dices';
 import Operators from '../operators/operators';
 import Result from '../result/result';
 import RollBtn from '../roll-btn/roll-btn';
-import { update } from '../../store/dnd-slice';
+import { updateColumn } from '../../store/dnd-slice';
 import './App.css';
+import initialData from '../../config';
 
-function App({ initialData }) {
+function App() {
   const operators = ['+', '-', '/', '*']
   const result = 14
 
-  const dices = useSelector(state => {
-    return state.dnd.dices
+  const dices = useSelector(state => state.dnd.dices)
+  const diceIds = useSelector(state => {
+    return state.dnd.columns.diceColumn.taskIds
+  })
+  const boardIds = useSelector(state => {
+    return state.dnd.columns.boardColumn.taskIds
   })
   const dispatch = useDispatch()
 
-  const state = initialData
-
   const onDragEnd = result => {
-    const { destination, source, draggableId } = result
+    const { destination, source } = result
 
+    console.log(destination)
     if (!destination) return
     if (destination.droppableId === source.droppableId &&
       destination.index === source.index) return
 
-    dispatch(update(result))
-
-    const column = initialData.columns[source.droppableId]
-    const newTaskIds = Array.from(column.taskIds)
-    newTaskIds.splice(source.index, 1)
-    newTaskIds.splice(destination.index, 0, draggableId)
-
-    const newColumn = {
-      ...column,
-      taskIds: newTaskIds
-    }
-
-    const newState = {
-      ...state,
-      columns: {
-        ...state.columns,
-        [newColumn.id]: newColumn
-      }
-    }
+        dispatch(updateColumn(result))
   }
 
   return (
@@ -56,11 +42,11 @@ function App({ initialData }) {
           <RollBtn />
         </aside>
         <section className='app-section'>
-          <Dices dices={dices} />
+          <Dices dices={dices} taskIds={diceIds} />
           <div className='app-content'>
             <Operators operators={operators} />
             <div className='app-board-content'>
-              <Board />
+              <Board dices={dices} taskIds={boardIds} />
               <Result result={result} />
             </div>
           </div>
@@ -71,3 +57,4 @@ function App({ initialData }) {
 }
 
 export default App;
+  
