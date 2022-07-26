@@ -1,5 +1,6 @@
 import { createSlice, current } from '@reduxjs/toolkit'
-import initialData from '../config';
+import { initialData } from '../config';
+import getRandomDices from '../utils/get-random-dices';
 
 const initialState = initialData;
 
@@ -7,6 +8,12 @@ export const dndSlice = createSlice({
   name: 'dnd',
   initialState,
   reducers: {
+    rollDices: (state) => {
+      const newDices = getRandomDices()
+      state.dices = newDices
+      state.columns.diceColumn.taskIds = Object.keys(newDices) 
+      state.columns.boardColumn.taskIds = [] 
+    },
     updateColumn: (state, action) => {
       const { destination, source } = action.payload
       const sourceColumn = current(state).columns[source.droppableId]
@@ -18,21 +25,19 @@ export const dndSlice = createSlice({
       if (destination.droppableId === source.droppableId) {
         sourceTaskIds.splice(destination.index, 0, draggableItem)
 
-        state.columns.diceColumn.taskIds = sourceTaskIds
+        state.columns[source.droppableId].taskIds = sourceTaskIds
       } else {
         destinationTaskIds.splice(destination.index, 0, draggableItem)
 
-        state.columns.diceColumn.taskIds = sourceTaskIds
-        state.columns.boardColumn.taskIds = destinationTaskIds
+        state.columns[source.droppableId].taskIds = sourceTaskIds
+        state.columns[destination.droppableId].taskIds = destinationTaskIds
       }
-
-
     }
   },
 })
 
 
 // Action creators are generated for each case reducer function
-export const { updateColumn } = dndSlice.actions
+export const { updateColumn, rollDices } = dndSlice.actions
 
 export default dndSlice.reducer

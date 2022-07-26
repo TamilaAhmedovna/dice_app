@@ -2,7 +2,7 @@ import React from 'react';
 import { Droppable } from 'react-beautiful-dnd';
 
 import Dice from '../dice/dice';
-import initialData from '../../config';
+import { initialData } from '../../config';
 import './dices.css';
 
 function Dices({ dices, taskIds }) {
@@ -11,24 +11,26 @@ function Dices({ dices, taskIds }) {
     return (
       <Droppable
         droppableId={initialData.columns.diceColumn.id}
-      // direction="horizontal"
+        direction="horizontal"
       >
         {(provided) => (
           <div
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
-            {taskIds.map((taskId, index) => {
-              const dice = dices[taskId]
+            <div className='dices-list'>
+              {taskIds.map((taskId, index) => {
+                const dice = dices[taskId]
 
-              return (
-                <Dice
-                  dice={dice}
-                  index={index}
-                  key={dice.id}
-                />
-              )
-            })}
+                return (
+                  <Dice
+                    dice={dice}
+                    index={index}
+                    key={dice.id}
+                  />
+                )
+              })}
+            </div>
             {provided.placeholder}
           </div>
         )}

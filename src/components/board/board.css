@@ -1,8 +1,10 @@
 .board {
     width: 200px;
-    height: 100px;
+    height: 70px;
+    display: flex;
     border: solid 2px gray;
     border-radius: 5px;
     margin-top: 10px;
+    padding: 8px;
     background-color: white;
 }

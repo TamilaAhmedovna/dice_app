@@ -6,12 +6,8 @@
     font-weight: 800;
 }
 
-.result-title {
-}
-
 .result-number {
     font-size: 30px;
     color: #001b89;
     text-shadow: 4px 3px 0px #fff, 9px 8px 0px rgba(0,0,0,0.15);
-
 }

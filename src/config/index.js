@@ -1,15 +1,8 @@
-const getDices = () => {
-    const dices = {}
-    const numbers = [1, 2, 3, 4, 5, 6]
-    const randomNumbers = numbers.sort(() => Math.random() - 0.5);
-    randomNumbers.pop()
-    randomNumbers.map(num => dices[`dice${num}`] = { id: num, content: num })
+import getRandomDices from "../utils/get-random-dices"
 
-    return dices;
-}
-const dices = getDices()
+const dices = getRandomDices()
 
-const initialData = {
+export const initialData = {
     dices,
     columns: {
         diceColumn: {
@@ -31,4 +24,4 @@ const initialData = {
     columnOrder: ['diceColumn', 'operatorsColumn', 'boardColumn']
 }
 
-export default initialData;
+// export default initialData;
