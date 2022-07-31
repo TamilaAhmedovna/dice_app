@@ -4,27 +4,27 @@ import getRandomOperators from "../utils/get-random-operators"
 const dices = getRandomDices()
 const operators = getRandomOperators()
 
-export const initialData = {
+const initialData = {
     dices,
     operators,
     columns: {
         dicesColumn: {
             id: 'dicesColumn',
             title: 'Dices',
-            taskIds: Object.keys(dices)
+            itemIds: Object.keys(dices)
         },
         operatorsColumn: {
             id: 'operatorsColumn',
             title: 'Operators',
-            taskIds: Object.keys(operators)
+            itemIds: Object.keys(operators)
         },
         boardColumn: {
             id: 'boardColumn',
             title: 'Board',
-            taskIds: []
+            itemIds: []
         }
     },
-    columnOrder: ['dicesColumn', 'operatorsColumn', 'boardColumn']
+    // columnOrder: ['dicesColumn', 'operatorsColumn', 'boardColumn']
 }
 
-// export default initialData;
+export default initialData;

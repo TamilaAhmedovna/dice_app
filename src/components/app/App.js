@@ -2,13 +2,11 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { DragDropContext } from 'react-beautiful-dnd';
 
-import Board from '../board/board';
-import Dices from '../dices/dices';
-import Operators from '../operators/operators';
+import DndColumn from '../dnd-column/dnd-column';
 import Result from '../result/result';
 import RollBtn from '../roll-btn/roll-btn';
 import { updateColumn, rollDices } from '../../store/dnd-slice';
-import { initialData } from '../../config';
+import initialData from '../../config';
 import './App.css';
 
 function App() {
@@ -19,27 +17,27 @@ function App() {
     .columns[initialData.columns.dicesColumn.id])
   const operatorsColumn = useSelector(state => state.dnd
     .columns[initialData.columns.operatorsColumn.id])
-  const boardIds = useSelector(state => state.dnd
-    .columns[initialData.columns.boardColumn.id].taskIds)
+  const boardColumn = useSelector(state => state.dnd
+    .columns[initialData.columns.boardColumn.id])
 
   const onDragEnd = result => {
-    const { destination, source } = result
+    const { destination, source, draggableId } = result
 
     if (!destination) return
-    if (destination.droppableId === source.droppableId &&
-      destination.index === source.index) return
+    // console.log(result)
+    // console.log(boardColumn.itemIds)
+    // if (!boardColumn.itemIds.length && !draggableId.includes('board')) return
     // if (destination.droppableId !== initialData.columns.boardColumn.id &&
     //   source.droppableId !== initialData.columns.boardColumn.id) return
-    if (destination.droppableId === initialData.columns.boardColumn.id &&
-      result.draggableId.includes('operator')) {
-      console.log()
-      console.log(destination.index)
-      console.log(boardIds)
-      if (boardIds[destination.index].includes('operator') ||
-        boardIds[destination.index - 1].includes('operator')) return
-      if (boardIds.length === destination.index ||
-        boardIds.length === 0) return
-    }
+    // if (destination.droppableId === initialData.columns.boardColumn.id &&
+    //   result.draggableId.includes('operator')) {
+    //   console.log()
+    //   console.log(destination.index)
+    //   if (boardColumn.itemIds[destination.index].includes('operator') ||
+    //   boardColumn.itemIds[destination.index - 1].includes('operator')) return
+    //   if (boardColumn.itemIds.length === destination.index ||
+    //     boardColumn.itemIds.length === 0) return
+    // }
 
     dispatch(updateColumn(result))
   }
@@ -49,27 +47,25 @@ function App() {
       <div className="app">
         <RollBtn rollDices={() => dispatch(rollDices())} />
         <section className='app-section'>
-          <Dices 
-            dices={dices}
-            dicesColumn={dicesColumn} 
+          <DndColumn
+            items={dices}
+            column={dicesColumn}
           />
-          <div className='app-content'>
-            <Operators 
-              operators={operators} 
-              operatorsColumn={operatorsColumn} 
+          <DndColumn
+            items={operators}
+            column={operatorsColumn}
+          />
+          <div className='app-board-content'>
+            <DndColumn
+              items={dices}
+              items2={operators}
+              column={boardColumn}
             />
-            <div className='app-board-content'>
-              <Board 
-                dices={dices} 
-                operators={operators} 
-                taskIds={boardIds} 
-              />
-              <Result 
-                dices={dices} 
-                operators={operators} 
-                taskIds={boardIds} 
-              />
-            </div>
+            <Result
+              dices={dices}
+              operators={operators}
+              itemIds={boardColumn.itemIds}
+            />
           </div>
         </section>
       </div>

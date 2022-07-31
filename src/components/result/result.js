@@ -3,22 +3,22 @@ import React from 'react';
 
 import './result.css';
 
-function Result({ dices, operators, taskIds }) {
+function Result({ dices, operators, itemIds }) {
 
   const calc = () => {
-    if (!taskIds.length) return null
+    if (!itemIds.length) return null
 
     let resultStr
 
-    taskIds.map((taskId, index) => {
-      const value = (dices[taskId] || operators[taskId]).content
+    itemIds.map((itemId, index) => {
+      const value = (dices[itemId] || operators[itemId]).content
 
-      resultStr = (!index) ? `${value}` : `${resultStr}${value}`
+      return resultStr = (!index) ? `${value}` : `${resultStr}${value}`
     })
 
     const math = create(all)
     const result = math.evaluate(resultStr)
-    
+
     return result.toFixed(2)
   }
 

@@ -6,19 +6,10 @@
 
 .app-section {
     padding: 20px;
-}
-
-.app-section {
     display: flex;
     flex-direction: column;
 }
 
-.app-content {
-    margin-top: 30px;
-    display: flex;
-}
-
 .app-board-content {
     display: flex;
-    align-items: center;
 }

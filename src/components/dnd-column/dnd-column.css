@@ -1,4 +1,16 @@
-.board {
+.dnd-column {
+    height: 80px;
+    display: flex;
+}
+
+.dnd-column-title {
+    margin-right: 20px;
+}
+
+.dnd-column-list {
+    display: flex;
+}
+.dnd-column-list.board {
     width: 220px;
     height: 44px;
     display: flex;

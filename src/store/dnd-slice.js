@@ -1,5 +1,5 @@
 import { createSlice, current } from '@reduxjs/toolkit'
-import { initialData } from '../config';
+import initialData from '../config';
 import getRandomDices from '../utils/get-random-dices';
 import getRandomOperators from '../utils/get-random-operators';
 
@@ -14,34 +14,32 @@ export const dndSlice = createSlice({
       const newOperators = getRandomOperators()
       state.dices = newDices
       state.operators = newOperators
-      state.columns.dicesColumn.taskIds = Object.keys(newDices)
-      state.columns.operatorsColumn.taskIds = Object.keys(newOperators) 
-      state.columns.boardColumn.taskIds = [] 
+      state.columns.dicesColumn.itemIds = Object.keys(newDices)
+      state.columns.operatorsColumn.itemIds = Object.keys(newOperators) 
+      state.columns.boardColumn.itemIds = [] 
     },
-    updateColumn: (state, action) => {
+    updateColumn: (state, action, draggableId) => {
       const { destination, source } = action.payload
       const sourceColumn = current(state).columns[source.droppableId]
       const destinationColumn = current(state).columns[destination.droppableId]
-      const sourceTaskIds = Array.from(sourceColumn.taskIds)
-      const destinationTaskIds = Array.from(destinationColumn.taskIds)
-      const draggableItem = sourceTaskIds.splice(source.index, 1)[0]
+      const sourceItemIds = Array.from(sourceColumn.itemIds)
+      const destinationItemIds = Array.from(destinationColumn.itemIds)
+      const draggableItem = sourceItemIds.splice(source.index, 1)[0]
 
       if (destination.droppableId === source.droppableId) {
-        sourceTaskIds.splice(destination.index, 0, draggableItem)
+        sourceItemIds.splice(destination.index, 0, draggableItem)
 
-        state.columns[source.droppableId].taskIds = sourceTaskIds
+        state.columns[source.droppableId].itemIds = sourceItemIds
       } else {
-        destinationTaskIds.splice(destination.index, 0, draggableItem)
+        destinationItemIds.splice(destination.index, 0, draggableItem)
 
-        state.columns[source.droppableId].taskIds = sourceTaskIds
-        state.columns[destination.droppableId].taskIds = destinationTaskIds
+        state.columns[source.droppableId].itemIds = sourceItemIds
+        state.columns[destination.droppableId].itemIds = destinationItemIds
       }
     }
   },
 })
 
-
-// Action creators are generated for each case reducer function
 export const { updateColumn, rollDices } = dndSlice.actions
 
 export default dndSlice.reducer
