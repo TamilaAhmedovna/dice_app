@@ -1,19 +1,22 @@
 import getRandomDices from "../utils/get-random-dices"
+import getRandomOperators from "../utils/get-random-operators"
 
 const dices = getRandomDices()
+const operators = getRandomOperators()
 
 export const initialData = {
     dices,
+    operators,
     columns: {
-        diceColumn: {
-            id: 'diceColumn',
+        dicesColumn: {
+            id: 'dicesColumn',
             title: 'Dices',
             taskIds: Object.keys(dices)
         },
         operatorsColumn: {
             id: 'operatorsColumn',
             title: 'Operators',
-            taskIds: []
+            taskIds: Object.keys(operators)
         },
         boardColumn: {
             id: 'boardColumn',
@@ -21,7 +24,7 @@ export const initialData = {
             taskIds: []
         }
     },
-    columnOrder: ['diceColumn', 'operatorsColumn', 'boardColumn']
+    columnOrder: ['dicesColumn', 'operatorsColumn', 'boardColumn']
 }
 
 // export default initialData;

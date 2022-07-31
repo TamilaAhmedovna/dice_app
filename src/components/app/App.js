@@ -8,19 +8,19 @@ import Operators from '../operators/operators';
 import Result from '../result/result';
 import RollBtn from '../roll-btn/roll-btn';
 import { updateColumn, rollDices } from '../../store/dnd-slice';
+import { initialData } from '../../config';
 import './App.css';
 
 function App() {
-  const operators = ['+', '-', '/', '*']
-  
-  const dices = useSelector(state => state.dnd.dices)
-  const diceIds = useSelector(state => {
-    return state.dnd.columns.diceColumn.taskIds
-  })
-  const boardIds = useSelector(state => {
-    return state.dnd.columns.boardColumn.taskIds
-  })
   const dispatch = useDispatch()
+  const dices = useSelector(state => state.dnd.dices)
+  const operators = useSelector(state => state.dnd.operators)
+  const dicesColumn = useSelector(state => state.dnd
+    .columns[initialData.columns.dicesColumn.id])
+  const operatorsColumn = useSelector(state => state.dnd
+    .columns[initialData.columns.operatorsColumn.id])
+  const boardIds = useSelector(state => state.dnd
+    .columns[initialData.columns.boardColumn.id].taskIds)
 
   const onDragEnd = result => {
     const { destination, source } = result
@@ -28,23 +28,47 @@ function App() {
     if (!destination) return
     if (destination.droppableId === source.droppableId &&
       destination.index === source.index) return
+    // if (destination.droppableId !== initialData.columns.boardColumn.id &&
+    //   source.droppableId !== initialData.columns.boardColumn.id) return
+    if (destination.droppableId === initialData.columns.boardColumn.id &&
+      result.draggableId.includes('operator')) {
+      console.log()
+      console.log(destination.index)
+      console.log(boardIds)
+      if (boardIds[destination.index].includes('operator') ||
+        boardIds[destination.index - 1].includes('operator')) return
+      if (boardIds.length === destination.index ||
+        boardIds.length === 0) return
+    }
 
-      dispatch(updateColumn(result))
+    dispatch(updateColumn(result))
   }
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="app">
-        <aside className="app-aside">
-          <RollBtn rollDices={() => dispatch(rollDices())} />
-        </aside>
+        <RollBtn rollDices={() => dispatch(rollDices())} />
         <section className='app-section'>
-          <Dices dices={dices} taskIds={diceIds} />
+          <Dices 
+            dices={dices}
+            dicesColumn={dicesColumn} 
+          />
           <div className='app-content'>
-            <Operators operators={operators} />
+            <Operators 
+              operators={operators} 
+              operatorsColumn={operatorsColumn} 
+            />
             <div className='app-board-content'>
-              <Board dices={dices} taskIds={boardIds} />
-              <Result dices={dices} taskIds={boardIds} />
+              <Board 
+                dices={dices} 
+                operators={operators} 
+                taskIds={boardIds} 
+              />
+              <Result 
+                dices={dices} 
+                operators={operators} 
+                taskIds={boardIds} 
+              />
             </div>
           </div>
         </section>
@@ -54,4 +78,3 @@ function App() {
 }
 
 export default App;
-  

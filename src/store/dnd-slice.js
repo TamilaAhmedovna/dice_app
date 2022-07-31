@@ -1,6 +1,7 @@
 import { createSlice, current } from '@reduxjs/toolkit'
 import { initialData } from '../config';
 import getRandomDices from '../utils/get-random-dices';
+import getRandomOperators from '../utils/get-random-operators';
 
 const initialState = initialData;
 
@@ -10,8 +11,11 @@ export const dndSlice = createSlice({
   reducers: {
     rollDices: (state) => {
       const newDices = getRandomDices()
+      const newOperators = getRandomOperators()
       state.dices = newDices
-      state.columns.diceColumn.taskIds = Object.keys(newDices) 
+      state.operators = newOperators
+      state.columns.dicesColumn.taskIds = Object.keys(newDices)
+      state.columns.operatorsColumn.taskIds = Object.keys(newOperators) 
       state.columns.boardColumn.taskIds = [] 
     },
     updateColumn: (state, action) => {

@@ -1,16 +1,17 @@
 import React from 'react';
 import { Droppable } from 'react-beautiful-dnd';
 import { initialData } from '../../config';
-import Dice from '../dice/dice';
+import DndItem from '../dice/dnd-item';
 
 import './board.css';
 
-function Board({ dices, taskIds }) {
+function Board({ dices, operators, taskIds }) {
 
   return (
     <Droppable
       droppableId={initialData.columns.boardColumn.id}
       direction="horizontal"
+      type='board'
     >
       {(provided) => (
         <div
@@ -19,14 +20,14 @@ function Board({ dices, taskIds }) {
         >
           <div className='board'>
             {taskIds.map((taskId, index) => {
-              const dice = dices[taskId]
-              if (!dice) return null
+              const value = (dices[taskId] || operators[taskId])
+              if (!value) return null
 
               return (
-                <Dice
-                  dice={dice}
+                <DndItem
+                  value={value}
                   index={index}
-                  key={dice.id}
+                  key={value.id}
                 />
               )
             })}

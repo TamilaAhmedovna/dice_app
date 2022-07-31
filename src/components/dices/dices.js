@@ -1,17 +1,23 @@
 import React from 'react';
 import { Droppable } from 'react-beautiful-dnd';
-
-import Dice from '../dice/dice';
 import { initialData } from '../../config';
+
+import DndItem from '../dice/dnd-item';
 import './dices.css';
 
-function Dices({ dices, taskIds }) {
+function Dices({ dices, dicesColumn }) {
+  const { id, title, taskIds } = dicesColumn
 
   const renderDicesList = () => {
+    console.log(id)
+    console.log(id === initialData.columns.operatorsColumn.id)
     return (
       <Droppable
-        droppableId={initialData.columns.diceColumn.id}
+        droppableId={id}
         direction="horizontal"
+        // type={(id === initialData.columns.operatorsColumn.id)
+          // ? 'boardColumn' : 'operationsColumn'}
+          type='board'
       >
         {(provided) => (
           <div
@@ -23,8 +29,8 @@ function Dices({ dices, taskIds }) {
                 const dice = dices[taskId]
 
                 return (
-                  <Dice
-                    dice={dice}
+                  <DndItem
+                    value={dice}
                     index={index}
                     key={dice.id}
                   />
@@ -40,7 +46,7 @@ function Dices({ dices, taskIds }) {
 
   return (
     <div className='dices'>
-      <div className='dices-title'>Dices:</div>
+      <div className='dices-title'>{title}:</div>
       {renderDicesList()}
     </div>
   );

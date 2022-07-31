@@ -1,26 +1,31 @@
+import { create, all } from 'mathjs';
 import React from 'react';
 
 import './result.css';
 
-function Result({ dices, taskIds }) {
-  console.log(taskIds)
-  console.log(dices)
-  let result
-  if (!taskIds.length) return null
-  taskIds.map((taskId, index) => {
-    const value = dices[taskId].content
+function Result({ dices, operators, taskIds }) {
 
-    if (!index) {
-      return result = value
-    }
+  const calc = () => {
+    if (!taskIds.length) return null
 
-    return result = `${result}${value}`
-  })
+    let resultStr
+
+    taskIds.map((taskId, index) => {
+      const value = (dices[taskId] || operators[taskId]).content
+
+      resultStr = (!index) ? `${value}` : `${resultStr}${value}`
+    })
+
+    const math = create(all)
+    const result = math.evaluate(resultStr)
+    
+    return result.toFixed(2)
+  }
 
   return (
     <div className='result'>
       <div className='result-title'>Result:</div>
-      <div className='result-number'>{result}</div>
+      <div className='result-number'>{calc()}</div>
     </div>
   );
 }

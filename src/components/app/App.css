@@ -1,9 +1,10 @@
 .app {
+    margin-top: 10px;
     display: flex;
     justify-content: center;
 }
 
-.app-aside, .app-section {
+.app-section {
     padding: 20px;
 }
 

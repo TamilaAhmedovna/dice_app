@@ -1,4 +1,5 @@
 .roll-btn {
+  height: 130px;
   background-color: #fbeee0;
   border: 2px solid #422800;
   border-radius: 30px;
@@ -24,11 +25,4 @@
 .roll-btn:active {
   box-shadow: #422800 2px 2px 0 0;
   transform: translate(2px, 2px);
-}
-
-@media (min-width: 768px) {
-  .roll-btn {
-    min-width: 120px;
-    padding: 0 25px;
-  }
 }

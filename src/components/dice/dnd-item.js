@@ -1,24 +1,24 @@
 import React from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 
-import './dice.css';
+import './dnd-item.css';
 
-function Dice({ dice, index }) {
+function DndItem({ value, index }) {
 
   return (
-    <Draggable draggableId={dice.id.toString()} index={index}>
+    <Draggable draggableId={value.id.toString()} index={index}>
       {(provided) => (
         <div
-          className='dice'
+          className='dnd-item'
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
         >
-          {dice.content}
+          {value.content}
         </div>
       )}
     </Draggable>
   );
 }
 
-export default Dice;
+export default DndItem;
