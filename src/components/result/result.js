@@ -5,27 +5,32 @@ import './result.css';
 
 function Result({ dices, operators, itemIds }) {
 
-  const calc = () => {
+  const calculate = resultStr => {
+    try {
+      const math = create(all)
+      const result = math.evaluate(resultStr)
+
+      return result.toFixed(2)
+    } catch (e) {
+      return '--'
+    }
+  }
+
+  const renderResult = () => {
     if (!itemIds.length) return null
-
     let resultStr
-
     itemIds.map((itemId, index) => {
       const value = (dices[itemId] || operators[itemId]).content
-
       return resultStr = (!index) ? `${value}` : `${resultStr}${value}`
     })
 
-    const math = create(all)
-    const result = math.evaluate(resultStr)
-
-    return result.toFixed(2)
+    return calculate(resultStr)
   }
 
   return (
     <div className='result'>
       <div className='result-title'>Result:</div>
-      <div className='result-number'>{calc()}</div>
+      <div className='result-number'>{renderResult()}</div>
     </div>
   );
 }

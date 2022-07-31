@@ -21,23 +21,13 @@ function App() {
     .columns[initialData.columns.boardColumn.id])
 
   const onDragEnd = result => {
-    const { destination, source, draggableId } = result
+    const { destination, source } = result
 
     if (!destination) return
-    // console.log(result)
-    // console.log(boardColumn.itemIds)
-    // if (!boardColumn.itemIds.length && !draggableId.includes('board')) return
-    // if (destination.droppableId !== initialData.columns.boardColumn.id &&
-    //   source.droppableId !== initialData.columns.boardColumn.id) return
-    // if (destination.droppableId === initialData.columns.boardColumn.id &&
-    //   result.draggableId.includes('operator')) {
-    //   console.log()
-    //   console.log(destination.index)
-    //   if (boardColumn.itemIds[destination.index].includes('operator') ||
-    //   boardColumn.itemIds[destination.index - 1].includes('operator')) return
-    //   if (boardColumn.itemIds.length === destination.index ||
-    //     boardColumn.itemIds.length === 0) return
-    // }
+    if (source.droppableId === initialData.columns.dicesColumn.id
+      && destination.droppableId === initialData.columns.operatorsColumn.id) return
+    if (source.droppableId === initialData.columns.operatorsColumn.id
+      && destination.droppableId === initialData.columns.dicesColumn.id) return
 
     dispatch(updateColumn(result))
   }

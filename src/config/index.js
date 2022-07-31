@@ -1,5 +1,5 @@
 import getRandomDices from "../utils/get-random-dices"
-import getRandomOperators from "../utils/get-random-operators"
+import { getRandomOperators } from "../utils/get-random-operators"
 
 const dices = getRandomDices()
 const operators = getRandomOperators()
