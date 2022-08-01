@@ -22,12 +22,14 @@ function App() {
 
   const onDragEnd = result => {
     const { destination, source } = result
-
     if (!destination) return
-    if (source.droppableId === initialData.columns.dicesColumn.id
-      && destination.droppableId === initialData.columns.operatorsColumn.id) return
-    if (source.droppableId === initialData.columns.operatorsColumn.id
-      && destination.droppableId === initialData.columns.dicesColumn.id) return
+
+    const operatorsColumnId = initialData.columns.operatorsColumn.id
+    const dicesColumnId = initialData.columns.dicesColumn.id
+    if (source.droppableId === dicesColumnId
+      && destination.droppableId === operatorsColumnId) return
+    if (source.droppableId === operatorsColumnId
+      && destination.droppableId === dicesColumnId) return
 
     dispatch(updateColumn(result))
   }

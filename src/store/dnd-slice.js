@@ -1,7 +1,7 @@
-import { createSlice, current } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 import initialData from '../config';
 import getRandomDices from '../utils/get-random-dices';
-import { getRandomOperators } from '../utils/get-random-operators';
+import getRandomOperators from '../utils/get-random-operators';
 
 const initialState = initialData;
 
@@ -12,6 +12,7 @@ export const dndSlice = createSlice({
     rollDices: (state) => {
       const newDices = getRandomDices()
       const newOperators = getRandomOperators()
+      
       state.dices = newDices
       state.operators = newOperators
       state.columns.dicesColumn.itemIds = Object.keys(newDices)
@@ -20,8 +21,8 @@ export const dndSlice = createSlice({
     },
     updateColumn: (state, action) => {
       const { destination, source } = action.payload
-      const sourceColumn = current(state).columns[source.droppableId]
-      const destinationColumn = current(state).columns[destination.droppableId]
+      const sourceColumn = state.columns[source.droppableId]
+      const destinationColumn = state.columns[destination.droppableId]
       const sourceItemIds = Array.from(sourceColumn.itemIds)
       const destinationItemIds = Array.from(destinationColumn.itemIds)
       const draggableItem = sourceItemIds.splice(source.index, 1)[0]

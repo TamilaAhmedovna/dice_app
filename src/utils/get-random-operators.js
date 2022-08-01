@@ -1,21 +1,17 @@
-export const operatorsConfig = {
-    plus: '+', 
-    minus: '-', 
-    division: '/', 
-    multiplication: '*'
-}
+const signs = ['+', '-', '/', '*']
+const min = 0
+const max = signs.length - 1 
 
-export const getRandomOperators = () => {
+const getRandomOperators = () => {
     const operators = {}
-    const min = 0
-    const max = 3
 
     for (let i = min; i <= max; i++) {
         const randomNum = Math.floor(Math.random() * (max - min + 1)) + min
         const id = `operator${i}_${randomNum}`
-        const randomOpetator = Object.keys(operatorsConfig)[randomNum]
-        operators[id] = { id, content: operatorsConfig[randomOpetator] }
+        operators[id] = { id, content: signs[randomNum] }
     }
 
     return operators;
 }
+
+export default getRandomOperators
